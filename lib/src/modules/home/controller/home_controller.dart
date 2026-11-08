@@ -11,7 +11,7 @@ abstract class _HomeControllerBase with Store {
   final AddressService _service;
 
   _HomeControllerBase({AddressService? service})
-      : _service = service ?? AddressService();
+    : _service = service ?? AddressService();
 
   @observable
   bool isLoading = false;

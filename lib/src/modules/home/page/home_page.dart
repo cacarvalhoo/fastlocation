@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:mobx/mobx.dart';
 
@@ -13,6 +12,8 @@ import '../components/address_list.dart';
 import '../components/empty_search.dart';
 import '../components/last_address_card.dart';
 import '../controller/home_controller.dart';
+
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -57,6 +58,16 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  /// Remove vírgula e número do fim do logradouro (o ViaCEP só aceita o nome da rua).
+  /// "Rua Bom Pastor, 1457" e "Rua Bom Pastor 1457" viram "Rua Bom Pastor".
+  String _cleanStreet(String raw) {
+    final beforeComma = raw.split(',').first;
+    return beforeComma
+        .replaceAll(RegExp(r'\s+\d+\s*$'), '')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+  }
+
   void _search() {
     FocusScope.of(context).unfocus();
     if (_byCep) {
@@ -65,7 +76,7 @@ class _HomePageState extends State<HomePage> {
       _controller.searchByAddress(
         uf: _ufCtrl.text,
         city: _cityCtrl.text,
-        street: _streetCtrl.text,
+        street: _cleanStreet(_streetCtrl.text),
       );
     }
   }
@@ -89,21 +100,8 @@ class _HomePageState extends State<HomePage> {
     if (address == null) return;
     final messenger = ScaffoldMessenger.of(context);
     try {
-      final locations =
-          await Geocoding().locationFromAddress(address.fullAddress);
-      if (locations.isEmpty) {
-        messenger.showSnackBar(
-          const SnackBar(
-            content: Text('Não foi possível localizar o endereço.'),
-          ),
-        );
-        return;
-      }
-
-      final dest = locations.first;
-      await MapLauncher.directions(
-        .coords(dest.latitude, dest.longitude, title: address.fullAddress),
-      ).show();
+      // Destino em texto: o Google Maps resolve o endereço e mostra o nome da rua.
+      await MapLauncher.directions(.search(address.geocodeQuery)).show();
     } on MapLaunchException {
       messenger.showSnackBar(
         const SnackBar(content: Text('Não foi possível abrir o mapa.')),
@@ -175,7 +173,8 @@ class _HomePageState extends State<HomePage> {
       return TextField(
         controller: _cepCtrl,
         keyboardType: TextInputType.number,
-        maxLength: 9,
+        maxLength: 8,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         decoration: const InputDecoration(
           labelText: 'CEP',
           hintText: '88101000',

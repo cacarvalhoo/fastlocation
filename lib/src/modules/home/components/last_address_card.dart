@@ -38,7 +38,9 @@ class LastAddressCard extends StatelessWidget {
             ),
             const SizedBox(height: AppMetrics.spaceXs),
             Text(
-              address.logradouro.isEmpty ? '(sem logradouro)' : address.logradouro,
+              address.logradouro.isEmpty
+                  ? '(sem logradouro)'
+                  : address.logradouro,
               style: const TextStyle(fontSize: 16),
             ),
             if (address.complemento.isNotEmpty) Text(address.complemento),

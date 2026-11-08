@@ -29,13 +29,13 @@ class AddressModel {
 
   /// Usado para gravar no Hive (como Map).
   Map<String, dynamic> toMap() => {
-        'cep': cep,
-        'logradouro': logradouro,
-        'complemento': complemento,
-        'bairro': bairro,
-        'localidade': localidade,
-        'uf': uf,
-      };
+    'cep': cep,
+    'logradouro': logradouro,
+    'complemento': complemento,
+    'bairro': bairro,
+    'localidade': localidade,
+    'uf': uf,
+  };
 
   factory AddressModel.fromMap(Map<dynamic, dynamic> map) {
     return AddressModel(
@@ -48,11 +48,30 @@ class AddressModel {
     );
   }
 
-  /// Texto completo, usado para geocodificar e traçar rota.
+  /// Texto completo para exibição.
   String get fullAddress {
-    final parts = [logradouro, bairro, localidade, uf]
-        .where((p) => p.trim().isNotEmpty)
-        .toList();
+    final parts = [
+      logradouro,
+      bairro,
+      localidade,
+      uf,
+    ].where((p) => p.trim().isNotEmpty).toList();
     return '${parts.join(', ')}, Brasil';
+  }
+
+  /// Texto usado só na busca de coordenadas (inclui o CEP para ser mais preciso).
+  String get geocodeQuery {
+    final cidadeUf = [
+      localidade,
+      uf,
+    ].where((p) => p.trim().isNotEmpty).join(' - ');
+    final parts = [
+      logradouro,
+      bairro,
+      cidadeUf,
+      cep,
+      'Brasil',
+    ].where((p) => p.trim().isNotEmpty).toList();
+    return parts.join(', ');
   }
 }

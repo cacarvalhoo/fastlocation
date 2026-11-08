@@ -7,10 +7,7 @@ import '../../../shared/metrics/app_metrics.dart';
 class EmptySearch extends StatelessWidget {
   final String message;
 
-  const EmptySearch({
-    super.key,
-    this.message = 'Nenhum endereço encontrado.',
-  });
+  const EmptySearch({super.key, this.message = 'Nenhum endereço encontrado.'});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +15,11 @@ class EmptySearch extends StatelessWidget {
       padding: const EdgeInsets.all(AppMetrics.spaceLg),
       child: Column(
         children: [
-          const Icon(Icons.search_off, size: 64, color: AppColors.textSecondary),
+          const Icon(
+            Icons.search_off,
+            size: 64,
+            color: AppColors.textSecondary,
+          ),
           const SizedBox(height: AppMetrics.spaceSm),
           Text(
             message,

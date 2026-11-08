@@ -16,11 +16,9 @@ class AddressService {
   final AddressApiRepository _api;
   final AddressLocalRepository _local;
 
-  AddressService({
-    AddressApiRepository? api,
-    AddressLocalRepository? local,
-  })  : _api = api ?? AddressApiRepository(),
-        _local = local ?? AddressLocalRepository();
+  AddressService({AddressApiRepository? api, AddressLocalRepository? local})
+    : _api = api ?? AddressApiRepository(),
+      _local = local ?? AddressLocalRepository();
 
   /// Retorna o endereço ou null se não encontrado.
   Future<AddressModel?> searchByCep(String cep) async {
