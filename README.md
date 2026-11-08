@@ -28,7 +28,7 @@ Aplicativo Flutter para consulta de CEP e endereços, usando a API pública
 
 ## Estrutura
 
-````
+```
 lib/
 ├── main.dart
 └── src/
@@ -40,7 +40,7 @@ lib/
         ├── initial/     # tela de abertura
         ├── home/        # consulta (components, controller, model, page, repositories, service)
         └── history/     # histórico (controller, page)
-````
+```
 
 ## Pré-requisitos
 
@@ -52,18 +52,18 @@ Confira o ambiente com `flutter doctor`.
 
 ## Como executar
 
-````bash
-git clone https://github.com/SEU_USUARIO/fastlocation.git
+```bash
+git clone https://github.com/cacarvalhoo/fastlocation.git
 cd fastlocation
 flutter pub get
 flutter run
-````
+```
 
 Para gerar os arquivos do MobX, se necessário:
 
-````bash
+```bash
 dart run build_runner build --delete-conflicting-outputs
-````
+```
 
 ## Como testar
 
@@ -85,24 +85,9 @@ dart run build_runner build --delete-conflicting-outputs
 - Em emulador Android, a localização padrão fica na Califórnia. Para ver a rota
   completa, configure uma localização em *Extended controls > Location*.
   Em um celular real a origem é a posição do aparelho.
-````
-````
-
-## Como aplicar
-
-1. Abra o `README.md` na raiz do projeto no VS Code.
-2. Aperte **Ctrl+A**, **Delete** e cole o conteúdo acima. Copie só o que está **dentro** do bloco, sem as linhas de crases do começo e do fim.
-3. Troque `SEU_USUARIO` pelo seu usuário do GitHub (se não lembrar, rode `git remote -v`).
-4. Salve com **Ctrl+S** e rode, um comando por vez:
-
-````powershell
-git add .
-````
-
-````powershell
-git commit -m "docs: atualiza README"
-````
-
-````powershell
-git push
-````
+- As versões de `dio`, `map_launcher` e `geocoding` são mais novas que as
+  sugeridas no enunciado, por compatibilidade com o Flutter/Dart atual. As
+  demais dependências seguem as faixas do enunciado.
+- O `hive_generator` não foi instalado porque é incompatível com o
+  `mobx_codegen` atual (conflito de versões do `source_gen`). O app não precisa
+  dele: os endereços são salvos no Hive como mapas, sem adapter gerado.
