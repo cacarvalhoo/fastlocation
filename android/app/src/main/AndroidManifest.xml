@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:label="fastlocation"
+        android:label="fastlocation"
     <application
         android:label="fastlocation"
         android:name="${applicationName}"
