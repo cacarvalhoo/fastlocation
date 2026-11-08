@@ -165,6 +165,18 @@ mixin _$HomeController on _HomeControllerBase, Store {
   }
 
   @override
+  void clearSearch() {
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+      name: '_HomeControllerBase.clearSearch',
+    );
+    try {
+      return super.clearSearch();
+    } finally {
+      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isLoading: ${isLoading},

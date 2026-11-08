@@ -93,6 +93,13 @@ abstract class _HomeControllerBase with Store {
     results.clear();
   }
 
-  @action
+    @action
   void clearError() => errorMessage = null;
+
+  /// Limpa os resultados e o estado de "nada encontrado" (botão Nova consulta).
+  @action
+  void clearSearch() {
+    results.clear();
+    notFound = false;
+  }
 }

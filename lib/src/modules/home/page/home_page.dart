@@ -12,7 +12,6 @@ import '../components/address_list.dart';
 import '../components/empty_search.dart';
 import '../components/last_address_card.dart';
 import '../controller/home_controller.dart';
-
 import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
@@ -86,8 +85,7 @@ class _HomePageState extends State<HomePage> {
     _ufCtrl.clear();
     _cityCtrl.clear();
     _streetCtrl.clear();
-    _controller.results.clear();
-    _controller.notFound = false;
+    _controller.clearSearch();
   }
 
   Future<void> _openHistory() async {
