@@ -31,7 +31,7 @@ class AddressService {
       if (address != null) await _local.save(address);
       return address;
     } on DioException catch (e) {
-      throw AddressException(_dioMessage(e));
+      throw AddressException(_dioMessage(e, byCep: true));
     }
   }
 
@@ -57,7 +57,7 @@ class AddressService {
         street: street.trim(),
       );
     } on DioException catch (e) {
-      throw AddressException(_dioMessage(e));
+      throw AddressException(_dioMessage(e, byCep: false));
     }
   }
 
@@ -68,14 +68,18 @@ class AddressService {
 
   List<AddressModel> getHistory() => _local.getAll();
 
-  String _dioMessage(DioException e) {
+  Future<void> clearHistory() => _local.clear();
+
+  String _dioMessage(DioException e, {required bool byCep}) {
     if (e.type == DioExceptionType.connectionError ||
         e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout) {
       return 'Sem conexão com a internet. Tente novamente.';
     }
     if (e.response?.statusCode == 400) {
-      return 'CEP inválido.';
+      return byCep
+          ? 'CEP inválido.'
+          : 'Consulta inválida. Confira UF, cidade e logradouro.';
     }
     return 'Erro ao consultar o endereço. Tente novamente.';
   }
