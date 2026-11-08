@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'modules/home/page/home_page.dart';
+import 'modules/initial/page/initial_page.dart';
+import 'routes/app_routes.dart';
+
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -8,9 +12,11 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'FastLocation',
       debugShowCheckedModeBanner: false,
-      home: const Scaffold(
-        body: Center(child: Text('FastLocation')),
-      ),
+      initialRoute: AppRoutes.initial,
+      routes: {
+        AppRoutes.initial: (_) => const InitialPage(),
+        AppRoutes.home: (_) => const HomePage(),
+      },
     );
   }
 }
