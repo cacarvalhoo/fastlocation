@@ -2,9 +2,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="fastlocation"
-        android:label="fastlocation"
-    <application
-        android:label="fastlocation"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
